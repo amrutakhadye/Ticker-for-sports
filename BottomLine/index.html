@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>jQuery ticker plugin examples</title>
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<style>
+@font-face {
+    font-family: swiss721 Bold;
+    src: url("../BottomLine/font/Swiss721 Bold.ttf");
+}
+@font-face {
+    font-family: swiss721 Medium;
+    src: url("../BottomLine/font/Swiss721 Medium.ttf");
+}
+.mainContainer{
+    background-image: url("../BottomLine/graphics/BtmLn_background_ele.jpg");
+    background-color:rgba(0,0,0,0.75);
+    height: 100px;
+    color: white;
+
+   
+  }
+  #ticker1{
+    
+  height: 35px;
+  text-align: center;
+  margin-left: 230px;
+  color: white;
+  float: left;
+  font-family: swiss721 Bold;
+  font-size: 25px;
+  line-height: 20px;
+  text-shadow: 1px 0px 20px yellow;
+
+  }
+  #ticker2{
+  color: black;
+  float: left;
+  width: 1300px;
+  height: 43px;
+  margin-left: -50px;
+  margin-top: 5px;
+  font-family: swiss721 Medium;
+  font-size: 22px;
+  line-height: 37px;
+  }
+  
+  li img{
+    width: 85px;
+    height: 35px;
+    
+  }
+  #leftScoreBoard{
+    background-image: url("../BottomLine/graphics/SCOREBOARD_Left.jpg");
+    background-repeat: no-repeat;
+    float: left;
+    width: 400px;
+    height: 43px;
+    margin-right: 10px;
+    margin-left: 80px;
+
+  }
+  #rightScoreBoard{
+    background-image: url("../BottomLine/graphics/SCOREBOARD_Right.jpg");
+    background-repeat: no-repeat;
+    float: left;
+    width: 400px;
+    height: 43px;
+    margin-right: 10px;
+
+
+
+  }
+  #msg{
+    float: left;
+    height: 43px;
+    margin-left: 80px;
+    color: white;
+    text-align: center;
+    font-family: swiss721 Medium;
+  }
+  #SBMsg{
+     float: left;
+    height: 43px;
+    margin-left: 20px;
+    color: black;
+    width: 80px;
+    background-image: url("../BottomLine/graphics/default_team_logo.png");
+    background-repeat: no-repeat;
+    text-align: center;
+    font-family: swiss721 Medium;
+
+  }
+  ul
+{
+    list-style-type: none;
+}
+#status{
+  color: white;
+  float: left;
+
+}
+#ticker1 li{
+    list-style-type: none;
+}
+#ticker2 li{
+    list-style-type: none;
+
+
+}
+#images{
+  float: left;
+  margin-right: 20px;
+}
+.fader {
+ display: inline-block;          
+}
+
+
+.videoPlayer{
+  width:1420px;
+  margin-left: -82px;
+ background-color: black;
+  height: 100px;
+}
+       
+#espnLogo{
+  background-image: url("../BottomLine/graphics/network_logo.jpg.jpeg");
+  width: 295px;
+  height: 100px;
+  position: absolute;
+  display: inline-flex;
+  float: right;
+  margin-left: 100px;
+
+}
+</style>
+</head>
+<body>
+
+<div class="mainContainer" id="mainCategories">
+<div id="ticker1"></div>
+<div id="ticker2"></div>
+<div id="espnLogo"></div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+
+function categoryNameTicker1(countArray){
+
+    var ticker2 = $('#ticker2');
+    var ticker1 = $('#ticker1');
+
+        var fader = $('<span class="fader">&nbsp;</span>');
+        var fader1 = $('<span class="fader">&nbsp;</span>').css({display:'inline-block'});
+
+        var links2 = ticker2.find('ul>li');
+        var links1 = ticker1.find('ul>li');
+
+        ticker2.find('ul').replaceWith(fader);
+        ticker1.find('ul').replaceWith(fader1);
+        
+        var counter2 = 0;
+        var curLink2;
+        var counter1 = 0;
+        var curLink1;
+        var fadeSpeed2 = 1000;
+        var showLink = function()
+            { 
+       var newLinkIndex2 = (counter2++) % links2.length;
+               
+        // ticker 2
+        var newLink2 = $(links2[newLinkIndex2]);
+                var fadeInFunction2 = function()
+                    { 
+                      var videos= '<video id="buttom" class="videoPlayer" autoplay><source src="../BottomLine/graphics/NewFile001.mp4" type="video/mp4" />';
+                      if(newLinkIndex2==0){
+                         fader1.append(videos);
+                       
+                      }else{
+                        $('#buttom').remove();
+
+                      }
+                      curLink2 = newLink2;
+                      fader.append(curLink2).fadeIn(fadeSpeed2); 
+
+                    };
+                if (curLink2)
+                {
+                        fader.fadeOut(fadeSpeed2, function(){
+                        curLink2.remove();
+                       setTimeout(fadeInFunction2,1000);
+                    });
+                   
+                }
+                else
+                {   
+                    fadeInFunction2();
+                }
+                // ticker1
+                for (var i = 0; i < countArray.length; i++)
+               {   
+                  if(countArray[i]==newLinkIndex2){
+                    var newLinkIndex1 = (counter1++) % links1.length;
+                    var newLink1 = $(links1[newLinkIndex1]);
+                    
+                    var fadeInFunction1 = function(){
+                       curLink1 = newLink1;
+                           fader1.append(curLink1).fadeIn(fadeSpeed2); 
+                   }
+                          
+                       
+                        
+                    if (curLink1)
+                    {
+                        fader1.fadeOut(fadeSpeed2, function(){
+                            curLink1.remove();
+                            setTimeout(fadeInFunction1, 1000);
+                        });
+                    }
+                    else
+                    {
+                        fadeInFunction1();
+                    }
+              };
+            }
+             };
+
+        
+
+
+       var speed = 6000;
+        var autoInterval;
+       // var autoInterval2;
+
+        var startTimer = function()
+        {                 
+          autoInterval = setInterval(showLink, speed);
+        
+        };
+
+        fader.fadeOut(0, function(){
+            fader.text('');
+            showLink();
+        });
+        startTimer();
+    }
+
+
+
+
+$(document).ready(function(){
+    $.ajax({
+        type: 'GET',
+        url: 'http://bldev0299dcxxxx:2550/api.bottomline.espn.com/v1/Builder/Playlist?networkName=ABC5&tag=',
+        crossDomain: true,
+        dataType: 'json',
+        success:function(data){
+        
+          console.log(data);
+          var countArray=[];
+          countArray[0]=0;
+          
+        CategoryName_data='<ul>';   
+        CategoryEvents_data='<ul>';
+        var count=1;
+        // var addvideo = $('<video width="1300" height="100" autoplay="true"><source src="../graphics/SC_HEADER_anim_BASE_ele (1).mp4" loop="on" type="video/mp4" />');
+        CategoryEvents_data += '<li></li>'
+            for(var i =1;i < data.length;i++){
+              
+                  CategoryName_data += '<li>'+data[i].CategoryName+'</li>';          
+                    
+             $.each(data[i].CategoryEvents,function(m,item){
+                if(item.CatMsg==null){
+    
+                   CategoryEvents_data += '<li><div id="leftScoreBoard"><div id="images"><img src="'+item.VisWebLogo+'"></img></div>';
+                   CategoryEvents_data += '<span style="margin-right:140px">' + item.VisName+'</span>';
+                   CategoryEvents_data += '<span>' + item.VisScore+'</span>';
+                   CategoryEvents_data += '</div><div id="rightScoreBoard"><div id="images"><img src="'+item.HomeWebLogo+'"></img></div>';
+                   CategoryEvents_data += '<span style="margin-right:140px">' +item.HomeName+'</span>'+'<span>'+item.HomeScore+'</span>';
+                   CategoryEvents_data += '</div>';
+                   CategoryEvents_data += '<div id="status">'+item.GameStatus+'</div></li>';
+                    count++;
+                    if(item.SBMsg0 != null || item.SBMsg0 != undefined){
+                        var str0= item.SBMsg0;
+                        CategoryEvents_data += '<li id="msg"><div id="SBMsg">'+str0.substring(0,3)+"  "+'</div>'+str0.substring(4)+'</li>';
+                        count++;
+
+                        if(item.SBMsg1 != null){
+                          var str1= item.SBMsg1;
+                        CategoryEvents_data +='<li id="msg"><div id="SBMsg">'+str1.substring(0,3)+"  "+'</div>'+str1.substring(4)+'</li>';
+                        count++;
+                        }   
+                      }                       
+                    }else{
+                      CategoryEvents_data += '<li><div id="msg">'+item.CatMsg+'</div></li>';
+                    count++;
+                    }
+
+                });  
+
+              var timer = count*1000;
+              countArray[i] = count;
+              }
+
+
+          CategoryEvents_data+='</ul>';
+            
+              
+              $(CategoryEvents_data).appendTo('#ticker2');
+              
+              CategoryName_data+='</ul>';  
+              $(CategoryName_data).appendTo('#ticker1');
+      
+             categoryNameTicker1(countArray);
+            
+        }
+
+
+  });
+
+
+
+
+      });
+</script>
+
+
+</body>
+</html>
